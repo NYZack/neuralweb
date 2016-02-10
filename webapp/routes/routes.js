@@ -61,6 +61,7 @@ setInterval(()=>{
     return;
   };
   var dir = '/mounted/captions'
+  var saveddir = '/mounted/savedcaptions'
   fs.readdirSync(dir).forEach(function(file) {
     var path = dir+'/'+file;
     fs.readFile(path, 'utf8',(err, caption) => {
@@ -71,7 +72,7 @@ setInterval(()=>{
       for (var i = pending.length - 1; i >= 0; i--) {
         if (pending[i].sha256sum == file) {
           try {
-            pending[i].reply.json({response:caption});
+            pending[i].reply.json({response:caption,filename:file});
             console.log('Replied with caption ' + caption);
           } catch (e) {
             console.log('Error responding with ' + caption);
@@ -79,7 +80,14 @@ setInterval(()=>{
           pending.splice(i, 1);
         }
       } 
-      fs.unlink(path);
+//      fs.unlink(path);
+
+      movefile(path, saveddir+'/'+file, function (err) {
+        if(err){
+          console.log('Could not save caption file '+file);
+        };
+      });
+
     });
   });
 },5000);
@@ -126,7 +134,8 @@ module.exports = function(app) {
 
     var fnameonly = oldpath.replace(/^.*[\\\/]/, '')
     var key = oldpath.replace(/\\/g, '/');
-    key = key.substring(key.lastIndexOf('/')+1, key.lastIndexOf('.'));
+//    key = key.substring(key.lastIndexOf('/')+1, key.lastIndexOf('.'));
+    key = key.substring(key.lastIndexOf('/')+1, key.length);
     var dopush = 1;
     newpath = nconf.get('processFolder') + '/' + fnameonly
         

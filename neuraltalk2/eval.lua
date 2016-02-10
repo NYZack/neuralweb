@@ -157,9 +157,13 @@ if #loader.files > 0 then
         -- dump the raw image to vis/ folder
 --        local cmd = 'cp "' .. path.join(opt.image_root, data.infos[k].file_path) .. '" vis/imgs/img' .. #predictions .. '.jpg' -- bit gross
 
-        local cappath = '/mounted/captions/' .. data.infos[k].file_path:match( ".+/(.*)%..*" )
+
+	local fname = data.infos[k].file_path:match( ".+/(.*)$" )
+	local cappath = '/mounted/captions/' .. fname
+--        local cappath = '/mounted/captions/' .. data.infos[k].file_path:match( ".+/(.*)%..*" )
         
-        local cmd = 'rm "' .. path.join(opt.image_root, data.infos[k].file_path) .. '"' -- bit gross
+--        local cmd = 'rm "' .. path.join(opt.image_root, data.infos[k].file_path) .. '"' -- bit gross
+	local cmd = 'mv "' .. data.infos[k].file_path .. '" "/tmp/savedimages/' .. fname .. '"'
         print(cmd)
         os.execute(cmd) -- dont think there is cleaner way in Lua
 
