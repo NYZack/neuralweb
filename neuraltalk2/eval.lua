@@ -159,11 +159,11 @@ if #loader.files > 0 then
 
 
 	local fname = data.infos[k].file_path:match( ".+/(.*)$" )
-	local cappath = '/mounted/captions/' .. fname
---        local cappath = '/mounted/captions/' .. data.infos[k].file_path:match( ".+/(.*)%..*" )
+	local cappath = '/home/ubuntu/extras/captions/' .. fname
+--        local cappath = '/home/ubuntu/extras/captions/' .. data.infos[k].file_path:match( ".+/(.*)%..*" )
         
 --        local cmd = 'rm "' .. path.join(opt.image_root, data.infos[k].file_path) .. '"' -- bit gross
-	local cmd = 'mv "' .. data.infos[k].file_path .. '" "/tmp/savedimages/' .. fname .. '"'
+	local cmd = 'mv "' .. data.infos[k].file_path .. '" "/home/ubuntu/extras/savedimages/' .. fname .. '"'
         print(cmd)
         os.execute(cmd) -- dont think there is cleaner way in Lua
 

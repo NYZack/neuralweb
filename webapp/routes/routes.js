@@ -13,8 +13,8 @@ nconf.argv().env();
 
 nconf.defaults({
   port: 5000,
-  modelPath: '/mounted/model_id1-501-1448236541.t7_cpu.t7',
-  processFolder: '/tmp/images',
+  modelPath: '/home/ubuntu/extras/model_id1-501-1448236541.t7_cpu.t7',
+  processFolder: '/home/ubuntu/extras/images',
   useGPU: '-1'
 });
 
@@ -39,7 +39,7 @@ catch(e){
 
 var runNeuralTalk = function(callback){
   var spawn = require('child_process').spawn;
-  var ntprocess = spawn('th', ['eval.lua','-model',nconf.get('modelPath'),'-image_folder',nconf.get('processFolder'),'-gpuid',nconf.get('useGPU'),'-dump_path','1'],{cwd:'/neuraltalk2/'});
+  var ntprocess = spawn('th', ['eval.lua','-model',nconf.get('modelPath'),'-image_folder',nconf.get('processFolder'),'-gpuid',nconf.get('useGPU'),'-dump_path','1'],{cwd:'/home/ubuntu/neuralweb/neuraltalk2/'});
 
   ntprocess.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
@@ -60,8 +60,8 @@ setInterval(()=>{
   if(pending.length === 0){
     return;
   };
-  var dir = '/mounted/captions'
-  var saveddir = '/mounted/savedcaptions'
+  var dir = '/home/ubuntu/extras/captions'
+  var saveddir = '/home/ubuntu/extras/savedcaptions'
   fs.readdirSync(dir).forEach(function(file) {
     var path = dir+'/'+file;
     fs.readFile(path, 'utf8',(err, caption) => {
